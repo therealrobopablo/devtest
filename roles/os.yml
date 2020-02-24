@@ -1,2 +1,16 @@
 ---
 #strip out DXC repos and update
+- name: copy over DXC repos
+command: mkdir /tmp/repos
+ignore_errors: yes
+- name: copy new repo
+copy:
+  src: /etc/yum.repos.d/*
+  dest: /tmp/repos/
+- name: yum repolist
+command: /bin/yum repolist
+- name: yum update
+yum:
+  name: '*'
+  state: latest
+
